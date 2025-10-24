@@ -1,0 +1,142 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 0%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 0%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 0%;
+
+    --primary: 45 100% 51%;
+    --primary-foreground: 0 0% 0%;
+
+    --secondary: 0 0% 0%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 45 30% 90%;
+    --muted-foreground: 0 0% 40%;
+
+    --accent: 45 100% 51%;
+    --accent-foreground: 0 0% 0%;
+
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 0%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 0%;
+    --input: 0 0% 90%;
+    --ring: 45 100% 51%;
+
+    --radius: 0.75rem;
+
+    --gradient-primary: linear-gradient(135deg, hsl(45, 100%, 51%), hsl(38, 92%, 50%));
+    --gradient-accent: linear-gradient(135deg, hsl(45, 100%, 51%), hsl(0, 0%, 0%));
+    --gradient-comic: linear-gradient(180deg, hsl(45, 100%, 51%), hsl(45, 100%, 70%));
+    --glow-yellow: 0 0 30px hsl(45 100% 51% / 0.8);
+    --glow-success: 0 0 20px hsl(142 76% 36% / 0.6);
+    --shadow-comic: 6px 6px 0px hsl(0 0% 0%);
+    --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 200%;
+    z-index: 0;
+    background-image: 
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 100px,
+        rgba(255, 255, 255, 0.03) 100px,
+        rgba(255, 255, 255, 0.03) 200px
+      );
+    background-size: 200px 200px;
+    animation: peach-scroll 20s linear infinite;
+    pointer-events: none;
+  }
+
+  body::after {
+    content: "🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑 🍑";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 400%;
+    height: 400%;
+    font-size: 100px;
+    line-height: 180px;
+    z-index: 0;
+    opacity: 0.12;
+    animation: peach-scroll 30s linear infinite;
+    pointer-events: none;
+    word-wrap: break-word;
+    white-space: normal;
+  }
+
+  @layer utilities {
+    .comic-border {
+      border: 4px solid hsl(var(--foreground));
+      box-shadow: 6px 6px 0px hsl(var(--foreground));
+    }
+    
+    .comic-button {
+      border: 3px solid hsl(var(--foreground));
+      box-shadow: 4px 4px 0px hsl(var(--foreground));
+      transition: all 0.1s;
+    }
+    
+    .comic-button:hover {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0px hsl(var(--foreground));
+    }
+    
+    .comic-button:active {
+      transform: translate(4px, 4px);
+      box-shadow: 0px 0px 0px hsl(var(--foreground));
+    }
+  }
+
+  @keyframes peach-scroll {
+    0% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+    100% {
+      transform: translate(-50%, -50%) rotate(360deg);
+    }
+  }
+
+  #root {
+    position: relative;
+    z-index: 1;
+  }
+}
