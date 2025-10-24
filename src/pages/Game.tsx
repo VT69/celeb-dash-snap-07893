@@ -180,9 +180,6 @@ const Game = () => {
     const isCorrect = selectedAnswer === currentQuestion.celebrity.name;
     if (isCorrect) {
       setScore((prev) => prev + 1);
-      toast.success("Correct! 🎉");
-    } else {
-      toast.error(`Wrong! It was ${currentQuestion.celebrity.name}`);
     }
 
     const newQuestionsAnswered = questionsAnswered + 1;

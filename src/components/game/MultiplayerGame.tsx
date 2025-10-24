@@ -171,10 +171,6 @@ const MultiplayerGame = ({ roomId, userId, isHost, celebrities, onGameEnd, onLea
         .update({ score: (player?.score || 0) + 1 })
         .eq("room_id", roomId)
         .eq("user_id", userId);
-
-      toast.success("Correct! +1 Point! 🎉");
-    } else {
-      toast.error(`Wrong! It was ${currentQuestion.celebrity.name}`);
     }
 
     if (isHost) {
