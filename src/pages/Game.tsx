@@ -248,11 +248,11 @@ const Game = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/20 via-background to-warning/20 relative overflow-hidden">
       <div className="relative z-10 container max-w-4xl mx-auto p-4 min-h-screen flex flex-col">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-black text-foreground comic-border bg-primary px-6 py-3 inline-block transform hover:rotate-1 transition-transform">
+        <div className="flex justify-between items-center mb-8 w-full">
+          <h1 className="text-4xl md:text-5xl font-black text-foreground comic-border bg-primary px-6 py-3 transform hover:rotate-1 transition-transform">
             🍑 GuesstheAss
           </h1>
-          <Button onClick={handleLogout} className="comic-button bg-secondary text-secondary-foreground font-bold">
+          <Button onClick={handleLogout} className="comic-button bg-secondary text-secondary-foreground font-bold px-8">
             Logout
           </Button>
         </div>

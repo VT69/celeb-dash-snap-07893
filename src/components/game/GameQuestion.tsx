@@ -51,11 +51,13 @@ const GameQuestion = ({ celebrity, options, onAnswer, timeLimit = 15 }: GameQues
 
   return (
     <div className="w-full max-w-2xl space-y-6 animate-fade-in">
-      <div className="text-center comic-border bg-card p-6 inline-block rounded-lg">
-        <div className={`text-8xl font-black ${getTimerColor()} transition-all ${timeLeft <= 3 ? 'animate-shake' : 'animate-pulse'}`}>
-          {timeLeft}
+      <div className="flex justify-center">
+        <div className="text-center comic-border bg-card p-6 rounded-lg">
+          <div className={`text-8xl font-black ${getTimerColor()} transition-all ${timeLeft <= 3 ? 'animate-shake' : 'animate-pulse'}`}>
+            {timeLeft}
+          </div>
+          <p className="text-foreground/70 mt-2 font-bold text-lg">seconds remaining ⏰</p>
         </div>
-        <p className="text-foreground/70 mt-2 font-bold text-lg">seconds remaining ⏰</p>
       </div>
 
       <Card className="overflow-hidden comic-border bg-card rounded-lg transform hover:scale-105 transition-transform">

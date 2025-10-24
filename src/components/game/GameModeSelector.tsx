@@ -7,7 +7,7 @@ interface GameModeSelectorProps {
 
 const GameModeSelector = ({ onSelectMode }: GameModeSelectorProps) => {
   return (
-    <div className="w-full max-w-4xl space-y-8">
+    <div className="w-full max-w-4xl space-y-8 mx-auto px-4">
       <h2 className="text-5xl md:text-6xl font-black text-center animate-bounce text-foreground">
         Choose Your Mode! 🎮
       </h2>

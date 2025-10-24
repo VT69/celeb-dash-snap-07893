@@ -27,16 +27,18 @@ const Index = () => {
   return (
     <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-primary/20 via-background to-warning/20 relative overflow-hidden">
       
-      <div className="relative z-10 text-center space-y-8 max-w-3xl">
-        <h1 className="text-7xl md:text-9xl font-black text-foreground animate-fade-in comic-border bg-primary px-8 py-4 inline-block transform hover:rotate-2 transition-transform">
-          🍑 GuesstheAss
-        </h1>
+      <div className="relative z-10 text-center space-y-8 max-w-3xl mx-auto">
+        <div className="flex justify-center">
+          <h1 className="text-7xl md:text-9xl font-black text-foreground animate-fade-in comic-border bg-primary px-8 py-4 transform hover:rotate-2 transition-transform">
+            🍑 GuesstheAss
+          </h1>
+        </div>
         
-        <p className="text-3xl md:text-4xl text-foreground font-bold animate-wiggle">
+        <p className="text-3xl md:text-4xl text-foreground font-bold animate-wiggle px-4">
           Think you know your celebrities?
         </p>
         
-        <p className="text-xl text-foreground/80 max-w-2xl mx-auto animate-fade-in font-semibold">
+        <p className="text-xl text-foreground/80 max-w-2xl mx-auto animate-fade-in font-semibold px-4">
           Test your knowledge with our WILD guessing game! You have 7 seconds to identify each celebrity from 4 options. Can you get a perfect score? 🎯
         </p>
         
