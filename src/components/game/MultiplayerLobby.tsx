@@ -50,7 +50,6 @@ const MultiplayerLobby = ({ userId, username, onGameStart, onBack }: Multiplayer
 
       if (playerError) throw playerError;
 
-      toast.success(`Room created! Code: ${newRoomCode}`);
       onGameStart(room.id, true);
     } catch (error) {
       console.error("Error creating room:", error);
@@ -132,23 +131,23 @@ const MultiplayerLobby = ({ userId, username, onGameStart, onBack }: Multiplayer
       </Button>
 
       <Card className="comic-border bg-card p-8 space-y-6">
-        <h2 className="text-4xl font-black text-center text-foreground">
+        <h2 className="text-4xl font-black text-center text-foreground mb-6">
           Multiplayer Lobby 👥
         </h2>
 
-        <div className="space-y-4">
+        <div className="space-y-6">
           <div className="text-center space-y-4">
             <p className="text-xl font-bold text-foreground/80">
-              Create a new room or join existing one
+              Create a new room and share the code
             </p>
             
             <Button
               onClick={createRoom}
               disabled={isCreating}
               size="lg"
-              className="w-full comic-button bg-success text-success-foreground font-black text-xl"
+              className="w-full comic-button bg-success text-success-foreground font-black text-2xl py-8"
             >
-              {isCreating ? "Creating..." : "Create Room 🎮"}
+              {isCreating ? "Creating..." : "🎮 Create Room"}
             </Button>
           </div>
 
@@ -157,25 +156,28 @@ const MultiplayerLobby = ({ userId, username, onGameStart, onBack }: Multiplayer
               <span className="w-full border-t border-foreground/20" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-card px-2 text-foreground/60 font-bold">OR</span>
+              <span className="bg-card px-2 text-foreground/60 font-bold">OR JOIN EXISTING</span>
             </div>
           </div>
 
           <div className="space-y-3">
+            <p className="text-center text-lg font-bold text-foreground/80">
+              Enter room code to join:
+            </p>
             <Input
-              placeholder="Enter Room Code"
+              placeholder="ENTER CODE"
               value={roomCode}
               onChange={(e) => setRoomCode(e.target.value.toUpperCase())}
-              className="text-center text-2xl font-black comic-border"
+              className="text-center text-4xl font-black comic-border py-8"
               maxLength={6}
             />
             <Button
               onClick={joinRoom}
               disabled={isJoining || !roomCode.trim()}
               size="lg"
-              className="w-full comic-button bg-primary text-foreground font-black text-xl"
+              className="w-full comic-button bg-primary text-foreground font-black text-2xl py-8"
             >
-              {isJoining ? "Joining..." : "Join Room 🚪"}
+              {isJoining ? "Joining..." : "🚪 Join Room"}
             </Button>
           </div>
         </div>

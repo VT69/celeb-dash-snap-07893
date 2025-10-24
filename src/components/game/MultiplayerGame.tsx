@@ -30,6 +30,7 @@ interface MultiplayerGameProps {
 
 const MultiplayerGame = ({ roomId, userId, isHost, celebrities, onGameEnd, onLeave }: MultiplayerGameProps) => {
   const [players, setPlayers] = useState<Player[]>([]);
+  const [roomCode, setRoomCode] = useState<string>("");
   const [currentQuestion, setCurrentQuestion] = useState<{
     celebrity: Celebrity;
     options: string[];
@@ -39,6 +40,7 @@ const MultiplayerGame = ({ roomId, userId, isHost, celebrities, onGameEnd, onLea
   const [waitingForPlayers, setWaitingForPlayers] = useState(true);
 
   useEffect(() => {
+    loadRoomCode();
     loadPlayers();
     subscribeToRoom();
     
@@ -46,6 +48,18 @@ const MultiplayerGame = ({ roomId, userId, isHost, celebrities, onGameEnd, onLea
       supabase.channel(`room-${roomId}`).unsubscribe();
     };
   }, [roomId]);
+
+  const loadRoomCode = async () => {
+    const { data } = await sb
+      .from("game_rooms")
+      .select("room_code")
+      .eq("id", roomId)
+      .single();
+    
+    if (data) {
+      setRoomCode(data.room_code);
+    }
+  };
 
   const loadPlayers = async () => {
     const { data } = await sb
@@ -210,27 +224,49 @@ const MultiplayerGame = ({ roomId, userId, isHost, celebrities, onGameEnd, onLea
     }
   };
 
+  const copyRoomCode = () => {
+    navigator.clipboard.writeText(roomCode);
+    toast.success("Room code copied to clipboard!");
+  };
+
   if (waitingForPlayers) {
     return (
       <div className="w-full max-w-2xl space-y-6">
-        <Card className="comic-border bg-card p-8 text-center space-y-4">
+        <Card className="comic-border bg-card p-8 text-center space-y-6">
           <h2 className="text-4xl font-black text-foreground">
             Waiting for Player 2... ⏳
           </h2>
           <div className="text-6xl animate-bounce">👤</div>
-          <p className="text-xl font-bold text-foreground/70">
-            Share the room code with a friend!
-          </p>
+          
+          <div className="space-y-3">
+            <p className="text-xl font-bold text-foreground/70">
+              Share this room code:
+            </p>
+            <div className="bg-primary/20 border-4 border-primary rounded-lg p-6">
+              <div className="text-6xl font-black text-foreground tracking-wider">
+                {roomCode}
+              </div>
+            </div>
+            <Button 
+              onClick={copyRoomCode}
+              className="comic-button bg-success text-success-foreground font-black"
+            >
+              📋 Copy Room Code
+            </Button>
+          </div>
+
           {players.length > 0 && (
-            <div className="space-y-2">
+            <div className="space-y-2 pt-4">
+              <p className="text-lg font-bold text-foreground/70">Players in lobby:</p>
               {players.map(player => (
-                <div key={player.user_id} className="text-lg font-bold">
+                <div key={player.user_id} className="text-xl font-black text-foreground">
                   ✓ {player.username}
                 </div>
               ))}
             </div>
           )}
-          <Button onClick={onLeave} variant="outline" className="comic-button">
+          
+          <Button onClick={onLeave} variant="outline" className="comic-button mt-4">
             Leave Room
           </Button>
         </Card>
