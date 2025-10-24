@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
+const sb = supabase as any;
 import { toast } from "sonner";
 
 interface MultiplayerLobbyProps {
@@ -26,7 +27,7 @@ const MultiplayerLobby = ({ userId, username, onGameStart, onBack }: Multiplayer
     try {
       const newRoomCode = generateRoomCode();
       
-      const { data: room, error: roomError } = await supabase
+      const { data: room, error: roomError } = await sb
         .from("game_rooms")
         .insert({
           room_code: newRoomCode,
@@ -38,7 +39,7 @@ const MultiplayerLobby = ({ userId, username, onGameStart, onBack }: Multiplayer
 
       if (roomError) throw roomError;
 
-      const { error: playerError } = await supabase
+      const { error: playerError } = await sb
         .from("room_players")
         .insert({
           room_id: room.id,
@@ -67,7 +68,7 @@ const MultiplayerLobby = ({ userId, username, onGameStart, onBack }: Multiplayer
 
     setIsJoining(true);
     try {
-      const { data: room, error: roomError } = await supabase
+      const { data: room, error: roomError } = await sb
         .from("game_rooms")
         .select("*")
         .eq("room_code", roomCode.toUpperCase())
@@ -80,7 +81,7 @@ const MultiplayerLobby = ({ userId, username, onGameStart, onBack }: Multiplayer
         return;
       }
 
-      const { data: existingPlayers } = await supabase
+      const { data: existingPlayers } = await sb
         .from("room_players")
         .select("*")
         .eq("room_id", room.id);
@@ -99,7 +100,7 @@ const MultiplayerLobby = ({ userId, username, onGameStart, onBack }: Multiplayer
         return;
       }
 
-      const { error: playerError } = await supabase
+      const { error: playerError } = await sb
         .from("room_players")
         .insert({
           room_id: room.id,

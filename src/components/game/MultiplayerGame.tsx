@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
+const sb = supabase as any;
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
@@ -47,7 +48,7 @@ const MultiplayerGame = ({ roomId, userId, isHost, celebrities, onGameEnd, onLea
   }, [roomId]);
 
   const loadPlayers = async () => {
-    const { data } = await supabase
+    const { data } = await sb
       .from("room_players")
       .select("*")
       .eq("room_id", roomId);
@@ -111,7 +112,7 @@ const MultiplayerGame = ({ roomId, userId, isHost, celebrities, onGameEnd, onLea
     }
     
     const celebrity = celebrities[0];
-    await supabase
+    await sb
       .from("game_rooms")
       .update({
         status: 'playing',
@@ -158,14 +159,14 @@ const MultiplayerGame = ({ roomId, userId, isHost, celebrities, onGameEnd, onLea
     const isCorrect = selectedAnswer === currentQuestion.celebrity.name;
     
     if (isCorrect) {
-      const { data: player } = await supabase
+      const { data: player } = await sb
         .from("room_players")
         .select("score")
         .eq("room_id", roomId)
         .eq("user_id", userId)
         .single();
 
-      await supabase
+      await sb
         .from("room_players")
         .update({ score: (player?.score || 0) + 1 })
         .eq("room_id", roomId)
@@ -183,7 +184,7 @@ const MultiplayerGame = ({ roomId, userId, isHost, celebrities, onGameEnd, onLea
       } else {
         setTimeout(async () => {
           const nextCelebrity = celebrities[nextIndex % celebrities.length];
-          await supabase
+          await sb
             .from("game_rooms")
             .update({
               current_question_index: nextIndex,
@@ -196,12 +197,12 @@ const MultiplayerGame = ({ roomId, userId, isHost, celebrities, onGameEnd, onLea
   };
 
   const endGame = async () => {
-    await supabase
+    await sb
       .from("game_rooms")
       .update({ status: 'finished' })
       .eq("id", roomId);
 
-    const { data } = await supabase
+    const { data } = await sb
       .from("room_players")
       .select("*")
       .eq("room_id", roomId);

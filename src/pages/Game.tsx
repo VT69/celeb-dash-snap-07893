@@ -10,7 +10,7 @@ import GameModeSelector from "@/components/game/GameModeSelector";
 import MultiplayerLobby from "@/components/game/MultiplayerLobby";
 import MultiplayerGame from "@/components/game/MultiplayerGame";
 import { User } from "@supabase/supabase-js";
-
+const sb = supabase as any;
 interface Celebrity {
   id: string;
   name: string;
@@ -44,7 +44,7 @@ const Game = () => {
       } else {
         setUser(session.user);
         
-        const { data: profile } = await supabase
+        const { data: profile } = await sb
           .from("profiles")
           .select("username")
           .eq("id", session.user.id)
@@ -73,7 +73,7 @@ const Game = () => {
   }, []);
 
   const loadCelebrities = async () => {
-    const { data, error } = await supabase.from("celebrities").select("*");
+    const { data, error } = await sb.from("celebrities").select("*");
     if (error) {
       toast.error("Failed to load celebrities");
       return;
@@ -132,19 +132,19 @@ const Game = () => {
   const handleMultiplayerEnd = async (myScore: number, opponentScore: number) => {
     if (!user) return;
 
-    await supabase.from("game_sessions").insert({
+    await sb.from("game_sessions").insert({
       user_id: user.id,
       score: myScore,
       questions_answered: 10,
     });
 
-    const { data: profile } = await supabase
+    const { data: profile } = await sb
       .from("profiles")
       .select("total_score, games_played")
       .eq("id", user.id)
       .single();
 
-    await supabase
+    await sb
       .from("profiles")
       .update({
         total_score: (profile?.total_score || 0) + myScore,
@@ -203,7 +203,7 @@ const Game = () => {
   const saveGameSession = async (finalScore: number) => {
     if (!user) return;
 
-    const { error } = await supabase.from("game_sessions").insert({
+    const { error } = await sb.from("game_sessions").insert({
       user_id: user.id,
       score: finalScore,
       questions_answered: 10,
@@ -213,13 +213,13 @@ const Game = () => {
       console.error("Failed to save game session:", error);
     }
 
-    const { data: profile } = await supabase
+    const { data: profile } = await sb
       .from("profiles")
       .select("total_score, games_played")
       .eq("id", user.id)
       .single();
 
-    const { error: updateError } = await supabase
+    const { error: updateError } = await sb
       .from("profiles")
       .update({
         total_score: (profile?.total_score || 0) + finalScore,

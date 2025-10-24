@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
+const sb = supabase as any;
 import { Trophy, RefreshCw } from "lucide-react";
 
 interface GameOverProps {
@@ -24,7 +25,7 @@ const GameOver = ({ finalScore, totalQuestions, onReplay }: GameOverProps) => {
   }, []);
 
   const loadLeaderboard = async () => {
-    const { data, error } = await supabase
+    const { data, error } = await sb
       .from("game_sessions")
       .select(`
         score,
