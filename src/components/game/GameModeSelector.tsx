@@ -18,7 +18,7 @@ const GameModeSelector = ({ onSelectMode }: GameModeSelectorProps) => {
             <div className="text-6xl">⏱️</div>
             <h3 className="text-2xl font-black text-foreground">Classic Mode</h3>
             <p className="text-foreground/70 font-bold">
-              15 seconds per question
+              10 seconds per question
               <br />
               10 rounds of fun!
             </p>
