@@ -34,7 +34,7 @@ const Index = () => {
           </h1>
         </div>
         
-        <p className="text-xl md:text-2xl text-foreground font-bold px-4">
+        <p className="text-xl md:text-2xl text-foreground font-bold px-4 animate-none motion-reduce:animate-none">
           Think you know your celebrities?
         </p>
         
