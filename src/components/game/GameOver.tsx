@@ -47,6 +47,15 @@ const GameOver = ({ finalScore, totalQuestions, onReplay }: GameOverProps) => {
   };
 
   const percentage = Math.round((finalScore / totalQuestions) * 100);
+  
+  const getWittyMessage = (score: number) => {
+    if (score === 10) return "Perfect! You know your celebs like the back of your hand! 🌟";
+    if (score >= 8) return "You know your stars well! Hollywood would be proud! 🎬";
+    if (score >= 6) return "Not bad! You've got some celeb knowledge! ⭐";
+    if (score >= 4) return "Getting there! Time to binge some celebrity news! 📰";
+    return "Keep practicing! Even paparazzi miss sometimes! 📸";
+  };
+  
   const getRankEmoji = (index: number) => {
     if (index === 0) return "🥇";
     if (index === 1) return "🥈";
@@ -68,6 +77,9 @@ const GameOver = ({ finalScore, totalQuestions, onReplay }: GameOverProps) => {
             </p>
             <p className="text-3xl font-bold text-foreground/80">
               {percentage}% Accuracy 🎯
+            </p>
+            <p className="text-2xl font-bold text-foreground/90 mt-4 animate-fade-in">
+              {getWittyMessage(finalScore)}
             </p>
           </div>
           <Button
