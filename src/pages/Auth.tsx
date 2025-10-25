@@ -94,7 +94,7 @@ const Auth = () => {
       <Card className="w-full max-w-md relative z-10 border-2 border-primary/30 bg-card/95 backdrop-blur">
         <CardHeader className="text-center">
           <CardTitle className="text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-            🎭 CelebGuess
+            GuessTheASS 🍑
           </CardTitle>
           <CardDescription className="text-lg">
             {isLogin ? "Welcome back!" : "Join the fun!"}
