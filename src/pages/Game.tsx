@@ -297,7 +297,7 @@ const Game = () => {
                 celebrity={currentQuestion.celebrity}
                 options={currentQuestion.options}
                 onAnswer={handleAnswer}
-                timeLimit={gameMode === 'rapid' ? 7 : 15}
+                timeLimit={gameMode === 'rapid' ? 7 : 10}
               />
             )}
           </div>
