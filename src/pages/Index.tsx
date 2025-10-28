@@ -35,11 +35,11 @@ const Index = () => {
         </div>
         
         <p className="text-lg sm:text-xl md:text-2xl text-foreground font-bold px-2 sm:px-4 animate-none motion-reduce:animate-none">
-          Think you know your celebrities?
+          Think you know your celebrities ASSwellASS you think?
         </p>
         
         <p className="text-sm sm:text-base text-foreground/80 max-w-xl mx-auto px-2 sm:px-4">
-          Test your knowledge! 7 seconds to identify each celebrity from 4 options.
+          Can you identify the celebrity behind? 7 cheeky seconds, 4 scandalous options! 🍑
         </p>
         
         <div className="flex justify-center pt-2 sm:pt-4">
