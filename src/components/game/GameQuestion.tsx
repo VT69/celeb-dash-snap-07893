@@ -50,18 +50,18 @@ const GameQuestion = ({ celebrity, options, onAnswer, timeLimit = 15 }: GameQues
   };
 
   return (
-    <div className="w-full max-w-xl space-y-3 animate-fade-in">
+    <div className="w-full max-w-xl space-y-2 sm:space-y-3 animate-fade-in px-2">
       <div className="flex justify-center">
-        <div className="text-center comic-border bg-card p-3 rounded-lg">
-          <div className={`text-5xl font-black ${getTimerColor()} transition-all ${timeLeft <= 3 ? 'animate-shake' : 'animate-pulse'}`}>
+        <div className="text-center comic-border bg-card p-2 sm:p-3 rounded-lg">
+          <div className={`text-3xl sm:text-5xl font-black ${getTimerColor()} transition-all ${timeLeft <= 3 ? 'animate-shake' : 'animate-pulse'}`}>
             {timeLeft}
           </div>
-          <p className="text-foreground/70 mt-1 font-bold text-sm">seconds ⏰</p>
+          <p className="text-foreground/70 mt-1 font-bold text-xs sm:text-sm">seconds ⏰</p>
         </div>
       </div>
 
       <Card className="overflow-hidden comic-border bg-card rounded-lg transform hover:scale-105 transition-transform">
-        <div className="aspect-square w-full max-h-64 bg-muted">
+        <div className="aspect-square w-full max-h-48 sm:max-h-64 bg-muted">
           <img
             src={celebrity.image_url}
             alt="Celebrity"
@@ -76,7 +76,7 @@ const GameQuestion = ({ celebrity, options, onAnswer, timeLimit = 15 }: GameQues
             key={index}
             onClick={() => handleAnswer(option)}
             disabled={!!selectedAnswer}
-            className={`text-base font-black py-4 transition-all comic-button ${
+            className={`text-sm sm:text-base font-black py-3 sm:py-4 transition-all comic-button ${
               selectedAnswer === option
                 ? option === celebrity.name
                   ? "bg-success text-success-foreground animate-pop"

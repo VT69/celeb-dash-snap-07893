@@ -244,15 +244,15 @@ const Game = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/20 via-background to-warning/20 relative overflow-hidden">
-      <div className="relative z-10 container max-w-4xl mx-auto p-4 min-h-screen flex flex-col">
-        <div className="flex justify-between items-center mb-4 w-full">
+      <div className="relative z-10 container max-w-4xl mx-auto p-2 sm:p-4 min-h-screen flex flex-col">
+        <div className="flex justify-between items-center mb-3 sm:mb-4 w-full gap-2">
           <h1 
             onClick={() => navigate("/")}
-            className="text-3xl md:text-4xl font-black text-foreground comic-border bg-primary px-4 py-2 transform hover:rotate-1 transition-transform cursor-pointer hover:scale-105"
+            className="text-xl sm:text-2xl md:text-4xl font-black text-foreground comic-border bg-primary px-2 sm:px-4 py-1 sm:py-2 transform hover:rotate-1 transition-transform cursor-pointer hover:scale-105"
           >
             🍑 GuesstheAss
           </h1>
-          <Button onClick={handleLogout} className="comic-button bg-secondary text-secondary-foreground font-bold px-6 py-2 text-sm">
+          <Button onClick={handleLogout} className="comic-button bg-secondary text-secondary-foreground font-bold px-3 sm:px-6 py-1.5 sm:py-2 text-xs sm:text-sm">
             Logout
           </Button>
         </div>
