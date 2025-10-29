@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { Trash2, Upload, ArrowLeft } from "lucide-react";
+import { useUserRole } from "@/hooks/useUserRole";
 
 const sb = supabase as any;
 
@@ -18,6 +19,7 @@ interface Celebrity {
 
 const CelebrityManager = () => {
   const navigate = useNavigate();
+  const { isAdmin, loading: roleLoading } = useUserRole();
   const [user, setUser] = useState<any>(null);
   const [celebrities, setCelebrities] = useState<Celebrity[]>([]);
   const [newName, setNewName] = useState("");
@@ -27,8 +29,20 @@ const CelebrityManager = () => {
 
   useEffect(() => {
     checkUser();
-    loadCelebrities();
   }, []);
+
+  useEffect(() => {
+    if (!roleLoading && !isAdmin) {
+      toast.error("Access denied: Admin only");
+      navigate("/game");
+    }
+  }, [isAdmin, roleLoading, navigate]);
+
+  useEffect(() => {
+    if (isAdmin) {
+      loadCelebrities();
+    }
+  }, [isAdmin]);
 
   const checkUser = async () => {
     const { data: { session } } = await supabase.auth.getSession();

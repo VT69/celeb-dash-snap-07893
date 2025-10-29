@@ -10,6 +10,7 @@ import GameModeSelector from "@/components/game/GameModeSelector";
 import MultiplayerLobby from "@/components/game/MultiplayerLobby";
 import MultiplayerGame from "@/components/game/MultiplayerGame";
 import { User } from "@supabase/supabase-js";
+import { useUserRole } from "@/hooks/useUserRole";
 const sb = supabase as any;
 interface Celebrity {
   id: string;
@@ -19,6 +20,7 @@ interface Celebrity {
 
 const Game = () => {
   const navigate = useNavigate();
+  const { isAdmin } = useUserRole();
   const [user, setUser] = useState<User | null>(null);
   const [celebrities, setCelebrities] = useState<Celebrity[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState<{
@@ -253,12 +255,14 @@ const Game = () => {
             🍑 GuesstheAss
           </h1>
           <div className="flex gap-2">
-            <Button 
-              onClick={() => navigate("/celebrity-manager")} 
-              className="comic-button bg-warning text-warning-foreground font-bold px-3 sm:px-6 py-1.5 sm:py-2 text-xs sm:text-sm"
-            >
-              📸 Manage
-            </Button>
+            {isAdmin && (
+              <Button 
+                onClick={() => navigate("/celebrity-manager")} 
+                className="comic-button bg-warning text-warning-foreground font-bold px-3 sm:px-6 py-1.5 sm:py-2 text-xs sm:text-sm"
+              >
+                📸 Manage
+              </Button>
+            )}
             <Button onClick={handleLogout} className="comic-button bg-secondary text-secondary-foreground font-bold px-3 sm:px-6 py-1.5 sm:py-2 text-xs sm:text-sm">
               Logout
             </Button>
