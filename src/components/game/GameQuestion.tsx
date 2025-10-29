@@ -9,13 +9,14 @@ interface GameQuestionProps {
     image_url: string;
   };
   options: string[];
-  onAnswer: (answer: string) => void;
+  onAnswer: (answer: string, timeElapsed: number) => void;
   timeLimit?: number;
 }
 
 const GameQuestion = ({ celebrity, options, onAnswer, timeLimit = 15 }: GameQuestionProps) => {
   const [timeLeft, setTimeLeft] = useState(timeLimit);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+  const [startTime] = useState(Date.now());
 
   useEffect(() => {
     setTimeLeft(timeLimit);
@@ -24,7 +25,8 @@ const GameQuestion = ({ celebrity, options, onAnswer, timeLimit = 15 }: GameQues
 
   useEffect(() => {
     if (timeLeft === 0 && !selectedAnswer) {
-      onAnswer("");
+      const timeElapsed = Date.now() - startTime;
+      onAnswer("", timeElapsed);
       return;
     }
 
@@ -35,12 +37,13 @@ const GameQuestion = ({ celebrity, options, onAnswer, timeLimit = 15 }: GameQues
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [timeLeft, selectedAnswer, onAnswer]);
+  }, [timeLeft, selectedAnswer, onAnswer, startTime]);
 
   const handleAnswer = (answer: string) => {
     if (selectedAnswer) return;
     setSelectedAnswer(answer);
-    onAnswer(answer);
+    const timeElapsed = Date.now() - startTime;
+    onAnswer(answer, timeElapsed);
   };
 
   const getTimerColor = () => {

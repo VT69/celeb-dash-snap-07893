@@ -97,6 +97,42 @@ export type Database = {
           },
         ]
       }
+      player_questions: {
+        Row: {
+          answer_time_ms: number | null
+          celebrity_id: string
+          created_at: string | null
+          id: string
+          is_correct: boolean | null
+          points_earned: number | null
+          question_index: number
+          room_id: string
+          user_id: string
+        }
+        Insert: {
+          answer_time_ms?: number | null
+          celebrity_id: string
+          created_at?: string | null
+          id?: string
+          is_correct?: boolean | null
+          points_earned?: number | null
+          question_index: number
+          room_id: string
+          user_id: string
+        }
+        Update: {
+          answer_time_ms?: number | null
+          celebrity_id?: string
+          created_at?: string | null
+          id?: string
+          is_correct?: boolean | null
+          points_earned?: number | null
+          question_index?: number
+          room_id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string | null

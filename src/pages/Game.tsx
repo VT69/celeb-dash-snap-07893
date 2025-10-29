@@ -174,7 +174,7 @@ const Game = () => {
     setQuestionsAnswered(0);
   };
 
-  const handleAnswer = async (selectedAnswer: string) => {
+  const handleAnswer = async (selectedAnswer: string, timeElapsed?: number) => {
     if (!currentQuestion || !user || isSaving) return;
 
     const isCorrect = selectedAnswer === currentQuestion.celebrity.name;
