@@ -27,29 +27,50 @@ Deno.serve(async (req) => {
       )
     }
 
-    const fileExt = file.name.split('.').pop()
-    const fileName = `${crypto.randomUUID()}.${fileExt}`
-    const filePath = fileName
+    // Get Cloudinary credentials
+    const cloudName = Deno.env.get('CLOUDINARY_CLOUD_NAME')
+    const apiKey = Deno.env.get('CLOUDINARY_API_KEY')
+    const apiSecret = Deno.env.get('CLOUDINARY_API_SECRET')
 
-    // Upload to storage
-    const { error: uploadError } = await supabase.storage
-      .from('celebrity-images')
-      .upload(filePath, file, {
-        contentType: file.type,
-        upsert: false
-      })
-
-    if (uploadError) {
-      console.error('Upload error:', uploadError)
+    if (!cloudName || !apiKey || !apiSecret) {
       return new Response(
-        JSON.stringify({ error: 'Failed to upload image' }),
+        JSON.stringify({ error: 'Cloudinary credentials not configured' }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       )
     }
 
-    const { data: { publicUrl } } = supabase.storage
-      .from('celebrity-images')
-      .getPublicUrl(filePath)
+    // Convert file to base64
+    const arrayBuffer = await file.arrayBuffer()
+    const base64 = btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)))
+    const dataUrl = `data:${file.type};base64,${base64}`
+
+    // Upload to Cloudinary
+    const cloudinaryFormData = new FormData()
+    cloudinaryFormData.append('file', dataUrl)
+    cloudinaryFormData.append('upload_preset', 'ml_default') // You can change this to a specific preset
+    cloudinaryFormData.append('api_key', apiKey)
+    cloudinaryFormData.append('timestamp', String(Math.floor(Date.now() / 1000)))
+    cloudinaryFormData.append('folder', 'celebrities')
+
+    const cloudinaryResponse = await fetch(
+      `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+      {
+        method: 'POST',
+        body: cloudinaryFormData,
+      }
+    )
+
+    if (!cloudinaryResponse.ok) {
+      const errorData = await cloudinaryResponse.text()
+      console.error('Cloudinary upload error:', errorData)
+      return new Response(
+        JSON.stringify({ error: 'Failed to upload image to Cloudinary' }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
+
+    const cloudinaryData = await cloudinaryResponse.json()
+    const publicUrl = cloudinaryData.secure_url
 
     // Insert into database
     const { error: dbError } = await supabase
