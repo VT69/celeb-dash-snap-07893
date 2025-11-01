@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import Game from "./pages/Game";
 import CelebrityManager from "./pages/CelebrityManager";
+import QuickUpload from "./pages/QuickUpload";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -22,6 +23,7 @@ const App = () => (
           <Route path="/auth" element={<Auth />} />
           <Route path="/game" element={<Game />} />
           <Route path="/celebrity-manager" element={<CelebrityManager />} />
+          <Route path="/quick-upload" element={<QuickUpload />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
